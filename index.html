@@ -7,18 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- div#tela-menu.tela>h1{Treino Binário}p{Escolha o modo de jogo:}button*2 -->
     <div id="tela-menu" class="tela">
         <h1>Treino Binário</h1>
-        <p>Escolha o modo de jogo:</p>
-        <button onclick="iniciarJogo(false)">Sem suporte</button>
-        <button onclick="iniciarJogo(true)">Com suporte</button>
+
+        <div class="grupo-toggle">
+            <label>Modo de jogo</label>
+            <button id="toggle-modo" onclick="alternarModo()">Binário → Decimal</button>
+        </div>
+
+        <div class="grupo-toggle">
+            <label>Suporte</label>
+            <button id="toggle-suporte" onclick="alternarSuporte()">Sem suporte</button>
+        </div>
+
+        <button onclick="iniciarJogo()">Jogar</button>
     </div>
 
     <div id="tela-jogo" class="tela escondido">
-        <p id="pergunta-label">Qual o valor decimal?</p>
-        <div id="numero-binario"></div>
+        <p id="pergunta-label"></p>
+        <div id="numero-display"></div>
         <div id="tabela-suporte"></div>
+        <div id="inputs-bits"></div>
         <input type="text" id="resposta" inputmode="numeric" placeholder="Digite o decimal">
         <button onclick="verificarResposta()">Confirmar</button>
         <div id="feedback"></div>
