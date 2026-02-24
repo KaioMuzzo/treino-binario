@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treino Binário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- div#tela-menu.tela>h1{Treino Binário}p{Escolha o modo de jogo:}button*2 -->
+    <div id="tela-menu" class="tela">
+        <h1>Treino Binário</h1>
+        <p>Escolha o modo de jogo:</p>
+        <button onclick="iniciarJogo(false)">Sem suporte</button>
+        <button onclick="iniciarJogo(true)">Com suporte</button>
+    </div>
+
+    <div id="tela-jogo" class="tela escondido">
+        <p id="pergunta-label">Qual o valor decimal?</p>
+        <div id="numero-binario"></div>
+        <div id="tabela-suporte"></div>
+        <input type="text" id="resposta" inputmode="numeric" placeholder="Digite o decimal">
+        <button onclick="verificarResposta()">Confirmar</button>
+        <div id="feedback"></div>
+        <button id="btn-proximo" class="escondido" onclick="proximoNumero()">Próximo</button>
+        <button onclick="voltarMenu()">Menu</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

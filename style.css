@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #0f0f0f;
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.tela {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.escondido {
+    display: none;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+p {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+#numero-binario {
+    font-size: 2.5rem;
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+}
+
+#numero-binario span {
+    width: 40px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 12px;
+    border: 2px solid #333;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    font-size: 1,1rem;
+    border-radius: 12px;
+    border: none;
+    background-color: #2d2d2d;
+    color: #f0f0f0;
+    cursor: pointer;
+}
+
+button:active {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#feedback {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.acerto {
+    color: #4caf50;
+}
+
+.erro {
+    color: #f44336;
+}
+
+/* Tabela de suporte */
+.linha-tabela {
+    display: flex;
+    justify-content: center;
+}
+
+.celula {
+    width: 40px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.potencia {
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
