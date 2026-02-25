@@ -130,15 +130,15 @@ function verificarResposta() {
     const feedback = document.getElementById('feedback');
 
     if (modoDecimal) {
-        const binario = numeroAtual.toString(2);
-        const bits = binario.length;
+        const bits = 8;
         const resposta = Array.from({ length: bits }, (_, i) => document.getElementById(`bit-${i}`).value).join('');
+        const binario8bit = numeroAtual.toString(2).padStart(8, '0');
 
-        if (resposta === binario) {
+        if (resposta === binario8bit) {
             feedback.textContent = '✓ Correto!';
             feedback.className = 'acerto';
         } else {
-            feedback.textContent = `✗ Errado. A resposta era ${binario}`;
+            feedback.textContent = `✗ Errado. A resposta era ${binario8bit}`;
             feedback.className = 'erro';
         }
 

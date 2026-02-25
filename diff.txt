@@ -1,0 +1,37 @@
+diff --git a/script.js b/script.js
+index 24d768b..a021c5a 100644
+--- a/script.js
++++ b/script.js
+@@ -130,15 +130,15 @@ function verificarResposta() {
+     const feedback = document.getElementById('feedback');
+ 
+     if (modoDecimal) {
+-        const binario = numeroAtual.toString(2);
+-        const bits = binario.length;
++        const bits = 8;
+         const resposta = Array.from({ length: bits }, (_, i) => document.getElementById(`bit-${i}`).value).join('');
++        const binario8bit = numeroAtual.toString(2).padStart(8, '0');
+ 
+-        if (resposta === binario) {
++        if (resposta === binario8bit) {
+             feedback.textContent = '✓ Correto!';
+             feedback.className = 'acerto';
+         } else {
+-            feedback.textContent = `✗ Errado. A resposta era ${binario}`;
++            feedback.textContent = `✗ Errado. A resposta era ${binario8bit}`;
+             feedback.className = 'erro';
+         }
+ 
+diff --git a/style.css b/style.css
+index ab3304c..a3c035a 100644
+--- a/style.css
++++ b/style.css
+@@ -25,7 +25,7 @@ body {
+ }
+ 
+ .escondido {
+-  display: none;
++  display: none !important;
+ }
+ 
+ h1 {
