@@ -17,7 +17,14 @@
 
         <div class="grupo-toggle">
             <label>Suporte</label>
-            <button id="toggle-suporte" onclick="alternarSuporte()">Sem suporte</button>
+            <div class="grupo-radio">
+                <label class="radio-opcao">
+                    <input type="radio" name="suporte" value="sem" checked> Sem suporte
+                </label>
+                <label class="radio-opcao">
+                    <input type="radio" name="suporte" value="com"> Com suporte
+                </label>
+            </div>
         </div>
 
         <button onclick="iniciarJogo()">Jogar</button>

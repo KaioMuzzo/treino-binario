@@ -1,17 +1,10 @@
 let numeroAtual = 0;
-let comSuporte = false;
 let modoDecimal = false;
 
 function alternarModo() {
     modoDecimal = !modoDecimal;
     const btn = document.getElementById('toggle-modo');
     btn.textContent = modoDecimal ? 'Decimal → Binário' : 'Binário → Decimal';
-}
-
-function alternarSuporte() {
-    comSuporte = !comSuporte;
-    const btn = document.getElementById('toggle-suporte');
-    btn.textContent = comSuporte ? 'Com suporte' : 'Sem suporte';
 }
 
 function iniciarJogo() {
@@ -110,6 +103,7 @@ function montarTabela(binario) {
   const container = document.getElementById('tabela-suporte');
   container.innerHTML = '';
 
+  const comSuporte = document.querySelector('input[name="suporte"]:checked').value === 'com';
   if (!comSuporte) return;
 
   // No modo decimal→binário sempre mostra 8 potências
