@@ -53,7 +53,7 @@
 
     <div id="cabecalho-jogo">
       <button class="btn-sm" onclick="voltarMenu()">Menu</button>
-      <button class="btn-sm" onclick="abrirTutorial()">Tutorial</button>
+      <button class="btn-sm" onclick="abrirModoGuiado()">Tutorial</button>
     </div>
 
     <div id="numero-hex">
@@ -77,64 +77,34 @@
     <button id="btn-drawer-af" onclick="toggleDrawerAF()">▶</button>
   </div>
 
-<!-- Modal Tutorial -->
-<div id="modal-tutorial" class="modal-overlay escondido">
-  <div class="modal-card">
-    <h2>Como funciona</h2>
-
-    <p>
-      O <strong>hexadecimal (base 16)</strong> usa:
-      <br />
-      <strong>0–9</strong> e <strong>A–F</strong>
-    </p>
-
-    <p>
-      Onde:
-      <br />
-      A = 10 • B = 11 • C = 12 • D = 13 • E = 14 • F = 15
-    </p>
-
-    <p><strong>📌 Cada posição tem um peso:</strong></p>
-
-    <p>
-      👉 Comece sempre pela <strong>direita</strong> (peso 1)  
-      e vá indo para a <strong>esquerda</strong>
-    </p>
-
-    <table class="tabela-pesos">
-      <thead>
-        <tr>
-          <th>Posição</th>
-          <th>Peso</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>1º (direita)</td><td>16⁰</td><td>1</td></tr>
-        <tr><td>2º</td><td>16¹</td><td>16</td></tr>
-        <tr><td>3º</td><td>16²</td><td>256</td></tr>
-        <tr><td>4º</td><td>16³</td><td>4096</td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>🧠 Como converter:</strong></p>
-    <p>
-      Multiplique cada dígito pelo peso e some tudo.
-    </p>
-
-    <p>
-      <strong>Exemplo:</strong><br />
-      1A₁₆ = 1×16 + 10×1 = <strong>26</strong>
-    </p>
-
-    <p>
-      💡 No campo <em>resultado</em> você pode digitar contas como:
-      <br />
-      <code>10 * 16</code>
-    </p>
-
-    <button onclick="fecharTutorial()">Fechar</button>
+<!-- Tela Tutorial (Modo Guiado) -->
+<div id="tela-tutorial" class="tela escondido">
+  <div id="tutorial-progresso"></div>
+  <div id="tutorial-numero">
+    <span id="tutorial-dig-esq">1</span><span id="tutorial-dig-dir">A</span><sub>16</sub>
   </div>
+  <div id="tutorial-subtexto" class="escondido"></div>
+  <div id="tutorial-pergunta"></div>
+  <div id="tutorial-tabela-af" class="escondido">
+    <div class="celula-af"><div class="af-hex">A</div><div class="af-dec">10</div></div>
+    <div class="celula-af"><div class="af-hex">B</div><div class="af-dec">11</div></div>
+    <div class="celula-af"><div class="af-hex">C</div><div class="af-dec">12</div></div>
+    <div class="celula-af"><div class="af-hex">D</div><div class="af-dec">13</div></div>
+    <div class="celula-af"><div class="af-hex">E</div><div class="af-dec">14</div></div>
+    <div class="celula-af"><div class="af-hex">F</div><div class="af-dec">15</div></div>
+  </div>
+  <div id="tutorial-input-area">
+    <input
+      id="tutorial-input"
+      type="text"
+      autocomplete="off"
+      maxlength="4"
+    />
+    <div id="tutorial-feedback"></div>
+  </div>
+  <button class="btn-destaque" id="tutorial-btn-confirmar" onclick="confirmarStep()">
+    Confirmar
+  </button>
 </div>
 
   <script src="hex.js"></script>

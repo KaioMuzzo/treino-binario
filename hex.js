@@ -5,6 +5,7 @@ let numeroHex = '';
 let pesos = [];
 let digitos = [];
 let linhasCorretas = [];
+let stepAtual = 0;
 
 // --- Navegação ---
 
@@ -254,12 +255,174 @@ function voltarMenu() {
   mostrarTela('tela-menu');
 }
 
-// --- Tutorial ---
+// --- Modo Guiado ---
 
-function abrirTutorial() {
-  document.getElementById('modal-tutorial').classList.remove('escondido');
+const STEPS = [
+  {
+    pergunta: 'Em 1A, qual dígito fica mais à direita?',
+    destacarDigito: 'direita',
+    resposta: 'A',
+    feedbackErro: 'O dígito mais à direita é o A',
+    feedbackAcerto: 'Isso! Sempre começamos pela direita',
+  },
+  {
+    pergunta: 'A vale quanto?',
+    mostrarTabelaAF: true,
+    resposta: '10',
+    feedbackErro: 'Use a tabela acima',
+    feedbackAcerto: 'Correto! A = 10',
+  },
+  {
+    pergunta: 'Qual é o peso do dígito da direita?',
+    destacarDigito: 'direita',
+    resposta: '1',
+    feedbackErro: 'O primeiro dígito (da direita) sempre vale 1',
+    feedbackAcerto: 'Isso! O da direita sempre ×1',
+  },
+  {
+    pergunta: '10 × 1 = ?',
+    subtexto: 'A = 10\nPeso = 1',
+    destacarDigito: 'direita',
+    resposta: '10',
+    feedbackErro: '10 × 1 = 10',
+    feedbackAcerto: 'Boa!',
+  },
+  {
+    pergunta: 'Agora o próximo dígito (à esquerda): 1 × 16 = ?',
+    subtexto: 'Segunda posição peso = ×16',
+    destacarDigito: 'esquerda',
+    resposta: '16',
+    feedbackErro: 'A segunda posição sempre multiplica por 16',
+    feedbackAcerto: 'Perfeito!',
+  },
+  {
+    pergunta: '10 + 16 = ?',
+    subtexto: '10 (direita)\n+ 16 (esquerda)',
+    resposta: '26',
+    feedbackErro: '10 + 16 = 26',
+    feedbackAcerto: 'Você converteu 1A₁₆ = 26!',
+  },
+];
+
+function iniciarModoGuiado() {
+  stepAtual = 0;
+  mostrarTela('tela-tutorial');
+  renderizarStep();
 }
 
-function fecharTutorial() {
-  document.getElementById('modal-tutorial').classList.add('escondido');
+function abrirModoGuiado() {
+  fecharDrawerAF();
+  document.getElementById('drawer-af').classList.add('escondido');
+  iniciarModoGuiado();
 }
+
+function renderizarStep() {
+  const step = STEPS[stepAtual];
+
+  document.getElementById('tutorial-progresso').textContent =
+    `Passo ${stepAtual + 1} de ${STEPS.length}`;
+  document.getElementById('tutorial-pergunta').textContent = step.pergunta;
+
+  // subtexto
+  const subtexto = document.getElementById('tutorial-subtexto');
+  if (step.subtexto) {
+    subtexto.textContent = step.subtexto;
+    subtexto.classList.remove('escondido');
+  } else {
+    subtexto.textContent = '';
+    subtexto.classList.add('escondido');
+  }
+
+  // tabela A–F
+  const tabelaAF = document.getElementById('tutorial-tabela-af');
+  if (step.mostrarTabelaAF) {
+    tabelaAF.classList.remove('escondido');
+  } else {
+    tabelaAF.classList.add('escondido');
+  }
+
+  // destaque de dígito
+  const digEsq = document.getElementById('tutorial-dig-esq');
+  const digDir = document.getElementById('tutorial-dig-dir');
+  digEsq.classList.remove('destaque-dig');
+  digDir.classList.remove('destaque-dig');
+  if (step.destacarDigito === 'esquerda') digEsq.classList.add('destaque-dig');
+  if (step.destacarDigito === 'direita')  digDir.classList.add('destaque-dig');
+
+  // input e feedback
+  const input = document.getElementById('tutorial-input');
+  input.value = '';
+  input.className = '';
+  input.focus();
+
+  const feedback = document.getElementById('tutorial-feedback');
+  feedback.textContent = '';
+  feedback.className = '';
+
+  const btn = document.getElementById('tutorial-btn-confirmar');
+  btn.textContent = 'Confirmar';
+  btn.onclick = confirmarStep;
+  btn.disabled = false;
+}
+
+function confirmarStep() {
+  const step = STEPS[stepAtual];
+  const input = document.getElementById('tutorial-input');
+  const feedback = document.getElementById('tutorial-feedback');
+  const resposta = input.value.trim().toUpperCase();
+  const correta = step.resposta.toUpperCase();
+
+  input.classList.remove('correta', 'errada');
+  feedback.classList.remove('acerto', 'erro');
+
+  if (resposta === correta) {
+    input.classList.add('correta');
+    feedback.classList.add('acerto');
+    feedback.textContent = step.feedbackAcerto;
+
+    document.getElementById('tutorial-btn-confirmar').disabled = true;
+
+    setTimeout(() => {
+      stepAtual++;
+      if (stepAtual < STEPS.length) {
+        renderizarStep();
+      } else {
+        concluirTutorial();
+      }
+    }, 1200);
+  } else {
+    input.classList.add('errada');
+    feedback.classList.add('erro');
+    feedback.textContent = step.feedbackErro;
+  }
+}
+
+function concluirTutorial() {
+  localStorage.setItem('hex_tutorial_visto', 'true');
+
+  document.getElementById('tutorial-progresso').textContent = '';
+  document.getElementById('tutorial-pergunta').textContent = 'Boa! Você converteu hexadecimal 🎉';
+  document.getElementById('tutorial-subtexto').classList.add('escondido');
+  document.getElementById('tutorial-tabela-af').classList.add('escondido');
+  document.getElementById('tutorial-input-area').classList.add('escondido');
+
+  const btn = document.getElementById('tutorial-btn-confirmar');
+  btn.textContent = 'Começar a jogar';
+  btn.disabled = false;
+  btn.onclick = () => {
+    document.getElementById('tutorial-input-area').classList.remove('escondido');
+    mostrarTela('tela-menu');
+  };
+}
+
+// --- Inicialização ---
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('tutorial-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') confirmarStep();
+  });
+
+  if (!localStorage.getItem('hex_tutorial_visto')) {
+    iniciarModoGuiado();
+  }
+});

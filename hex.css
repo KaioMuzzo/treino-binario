@@ -342,55 +342,110 @@ button:active {
   border-radius: 8px;
 }
 
-/* --- Modal tutorial --- */
+/* --- Tela Tutorial (Modo Guiado) --- */
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  z-index: 100;
+#tutorial-progresso {
+  font-size: 0.85rem;
+  opacity: 0.5;
+  letter-spacing: 0.05em;
 }
 
-.modal-card {
-  background: var(--bg-card);
-  padding: 2rem;
-  max-width: 480px;
-  width: 100%;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+#tutorial-numero {
+  font-size: 3rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+#tutorial-numero sub {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+#tutorial-pergunta {
+  font-size: 1.2rem;
+  text-align: center;
+  opacity: 1;
+}
+
+#tutorial-input-area {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.modal-card h2 {
-  font-size: 1.4rem;
-}
-
-.modal-card p {
-  text-align: left;
-  line-height: 1.6;
-}
-
-.tabela-pesos {
+  align-items: center;
+  gap: 8px;
   width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
 }
 
-.tabela-pesos th,
-.tabela-pesos td {
-  padding: 6px 10px;
-  border: 1px solid var(--border);
+#tutorial-input {
+  width: 6rem;
+  padding: 10px;
+  font-size: 1.4rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background-color: var(--bg-card);
+  color: var(--text);
+  outline: none;
+}
+
+#tutorial-input:focus {
+  border-color: var(--text);
+}
+
+#tutorial-input.correta {
+  border-color: var(--acerto);
+}
+
+#tutorial-input.errada {
+  border-color: var(--erro);
+  animation: shake 0.3s ease;
+}
+
+#tutorial-feedback {
+  font-size: 0.95rem;
+  min-height: 1.4em;
   text-align: center;
 }
 
-.tabela-pesos th {
-  background-color: #222;
+#tutorial-feedback.acerto {
+  color: var(--acerto);
+}
+
+#tutorial-feedback.erro {
+  color: var(--erro);
+}
+
+#tutorial-dig-esq,
+#tutorial-dig-dir {
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+#tutorial-dig-esq.destaque-dig,
+#tutorial-dig-dir.destaque-dig {
   color: var(--accent);
+}
+
+#tutorial-subtexto {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  text-align: center;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+#tutorial-tabela-af {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  width: 100%;
+  max-width: 200px;
+}
+
+#tutorial-tabela-af.escondido {
+  display: none !important;
 }
