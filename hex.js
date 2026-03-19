@@ -43,11 +43,11 @@ function iniciarJogo() {
 function gerarNumeroHex(nivel) {
   let n;
   if (nivel === 1) {
-    n = 1;
-  } else if (nivel === 2) {
     n = 2;
+  } else if (nivel === 2) {
+    n = 3;
   } else {
-    n = Math.random() < 0.5 ? 3 : 4;
+    n = Math.random() < 0.5 ? 4 : 5;
   }
 
   let hex;
@@ -380,16 +380,17 @@ function confirmarStep() {
     feedback.classList.add('acerto');
     feedback.textContent = step.feedbackAcerto;
 
-    document.getElementById('tutorial-btn-confirmar').disabled = true;
-
-    setTimeout(() => {
+    const btn = document.getElementById('tutorial-btn-confirmar');
+    btn.textContent = 'Próximo';
+    btn.disabled = false;
+    btn.onclick = () => {
       stepAtual++;
       if (stepAtual < STEPS.length) {
         renderizarStep();
       } else {
         concluirTutorial();
       }
-    }, 1200);
+    };
   } else {
     input.classList.add('errada');
     feedback.classList.add('erro');
