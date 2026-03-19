@@ -1,5 +1,6 @@
 // Estado global
 let dificuldade = 1;
+let comSuporte = false;
 let numeroHex = '';
 let pesos = [];
 let digitos = [];
@@ -17,6 +18,7 @@ function mostrarTela(id) {
 function iniciarJogo() {
   const selecionado = document.querySelector('input[name="dificuldade"]:checked');
   dificuldade = selecionado ? parseInt(selecionado.value) : 1;
+  comSuporte = document.querySelector('input[name="suporte-hex"]:checked')?.value === 'com';
 
   numeroHex = gerarNumeroHex(dificuldade);
   const n = numeroHex.length;
@@ -116,6 +118,10 @@ function renderizarGrade() {
     campoDig.className = 'campo-digito';
     campoDig.maxLength = 1;
     campoDig.setAttribute('autocomplete', 'off');
+    if (comSuporte) {
+      campoDig.value = digitos[i];
+      campoDig.readOnly = true;
+    }
 
     const simboloMult = document.createElement('span');
     simboloMult.className = 'simbolo-multiplicacao';
@@ -142,12 +148,14 @@ function renderizarGrade() {
     container.appendChild(linha);
 
     // Enter em campo-digito → foca campo-resultado da mesma linha
-    campoDig.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        campoRes.focus();
-      }
-    });
+    if (!comSuporte) {
+      campoDig.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          campoRes.focus();
+        }
+      });
+    }
 
     // Enter em campo-resultado → valida linha, foca próxima
     campoRes.addEventListener('keydown', (e) => {
@@ -158,7 +166,10 @@ function renderizarGrade() {
         if (i + 1 < n) {
           const proximaLinha = container.querySelector(`.linha-grid[data-index="${i + 1}"]`);
           if (proximaLinha) {
-            proximaLinha.querySelector('.campo-digito').focus();
+            const campoFoco = comSuporte
+              ? proximaLinha.querySelector('.campo-resultado')
+              : proximaLinha.querySelector('.campo-digito');
+            campoFoco.focus();
           }
         }
       }
@@ -166,7 +177,8 @@ function renderizarGrade() {
   }
 
   // Foca o primeiro campo (linha com index 0, que visualmente é a de cima)
-  const primeira = container.querySelector('.linha-grid[data-index="0"] .campo-digito');
+  const seletor = comSuporte ? '.campo-resultado' : '.campo-digito';
+  const primeira = container.querySelector(`.linha-grid[data-index="0"] ${seletor}`);
   if (primeira) primeira.focus();
 }
 
