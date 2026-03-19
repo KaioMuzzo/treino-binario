@@ -1,0 +1,381 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:        #0f0f0f;
+  --bg-card:   #1a1a1a;
+  --border:    #333;
+  --text:      #f0f0f0;
+  --accent:    #4a9eff;
+  --acerto:    #4caf50;
+  --erro:      #f44336;
+  --font-mono: monospace;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: default;
+}
+
+.escondido {
+  display: none !important;
+}
+
+.tela {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+p {
+  font-size: 1rem;
+  opacity: 0.7;
+  text-align: center;
+}
+
+/* --- Menu --- */
+
+.grupo-radio {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.radio-opcao {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 10px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background-color: var(--bg-card);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.15s;
+  text-align: center;
+}
+
+.radio-opcao:has(input:checked) {
+  border-color: var(--accent);
+}
+
+.radio-opcao input[type="radio"] {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* --- Tela jogo cabeçalho --- */
+
+#cabecalho-jogo {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+/* --- Número hex em destaque --- */
+
+#numero-hex {
+  font-size: 3rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+#numero-hex sub {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* --- Drawer A–F --- */
+
+#drawer-af {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+}
+
+#btn-drawer-af {
+  width: auto;
+  padding: 12px 8px;
+  font-size: 1rem;
+  border-radius: 0 12px 12px 0;
+  border: 1px solid var(--border);
+  border-left: none;
+  background-color: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+}
+
+#btn-drawer-af:active {
+  background-color: #444;
+}
+
+#painel-af {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0;
+  width: 0;
+  overflow: hidden;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  transition: width 0.25s ease, padding 0.25s ease;
+}
+
+#drawer-af.aberto #painel-af {
+  width: 90px;
+  padding: 10px 8px;
+}
+
+.celula-af {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 4px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.celula-af .af-hex {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.celula-af .af-dec {
+  opacity: 0.7;
+}
+
+/* --- Grade de decomposição --- */
+
+#grade-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.linha-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.campo-digito {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 1.2rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background-color: var(--bg-card);
+  color: var(--text);
+}
+
+.campo-digito:focus {
+  border-color: var(--text);
+  outline: none;
+}
+
+.simbolo-multiplicacao,
+.simbolo-igual {
+  font-family: var(--font-mono);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.peso {
+  width: 5rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  color: #888;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.campo-resultado {
+  width: 6rem;
+  padding: 6px 8px;
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background-color: var(--bg-card);
+  color: var(--text);
+}
+
+.campo-resultado:focus {
+  border-color: var(--text);
+  outline: none;
+}
+
+.linha-grid.correta .campo-digito,
+.linha-grid.correta .campo-resultado {
+  border-color: var(--acerto);
+}
+
+.linha-grid.errada .campo-digito,
+.linha-grid.errada .campo-resultado {
+  border-color: var(--erro);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-4px); }
+  75%       { transform: translateX(4px); }
+}
+
+/* --- Total --- */
+
+#secao-total {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+#secao-total hr {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+#total {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--acerto);
+  font-family: var(--font-mono);
+}
+
+/* --- Botões --- */
+
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: none;
+  background-color: #2d2d2d;
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:active {
+  background-color: #444;
+}
+
+.btn-destaque {
+  background-color: var(--accent);
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-destaque:active {
+  background-color: #3a8ee8;
+}
+
+.btn-sm {
+  width: auto;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+
+/* --- Modal tutorial --- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  padding: 2rem;
+  max-width: 480px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-card h2 {
+  font-size: 1.4rem;
+}
+
+.modal-card p {
+  text-align: left;
+  line-height: 1.6;
+}
+
+.tabela-pesos {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.tabela-pesos th,
+.tabela-pesos td {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.tabela-pesos th {
+  background-color: #222;
+  color: var(--accent);
+}

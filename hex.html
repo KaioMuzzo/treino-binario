@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hex → Decimal</title>
+  <link rel="stylesheet" href="hex.css" />
+</head>
+<body>
+
+  <!-- Tela Menu -->
+  <div id="tela-menu" class="tela">
+    <h1>Hex → Decimal</h1>
+    <p>Converta números hexadecimais para decimal decompondo cada dígito pelo seu peso.</p>
+
+    <div class="grupo-radio">
+      <label class="radio-opcao">
+        <input type="radio" name="dificuldade" value="1" checked />
+        <strong>Nível 1</strong>
+        <span>1 dígito</span>
+      </label>
+      <label class="radio-opcao">
+        <input type="radio" name="dificuldade" value="2" />
+        <strong>Nível 2</strong>
+        <span>2 dígitos</span>
+      </label>
+      <label class="radio-opcao">
+        <input type="radio" name="dificuldade" value="3" />
+        <strong>Nível 3</strong>
+        <span>3-4 dígitos</span>
+      </label>
+    </div>
+
+    <button class="btn-destaque" onclick="iniciarJogo()">Começar</button>
+    <button onclick="window.location.href='index.html'" style="opacity:0.5;font-size:0.9rem;">← Jogar Binário</button>
+  </div>
+
+  <!-- Tela Jogo -->
+  <div id="tela-jogo" class="tela escondido">
+
+    <div id="cabecalho-jogo">
+      <button class="btn-sm" onclick="voltarMenu()">Menu</button>
+      <button class="btn-sm" onclick="abrirTutorial()">Tutorial</button>
+    </div>
+
+    <div id="numero-hex">
+      <span id="hex-valor"></span><sub>16</sub>
+    </div>
+
+    <div id="grade-container"></div>
+
+    <div id="secao-total" class="escondido">
+      <hr />
+      <div id="total"></div>
+      <button class="btn-destaque" onclick="proximaRodada()">Próximo</button>
+    </div>
+
+  </div>
+
+  <!-- Drawer A–F -->
+  <div id="drawer-af" class="escondido">
+    <div id="painel-af"></div>
+    <button id="btn-drawer-af" onclick="toggleDrawerAF()">▶</button>
+  </div>
+
+  <!-- Modal Tutorial -->
+  <div id="modal-tutorial" class="modal-overlay escondido">
+    <div class="modal-card">
+      <h2>Como funciona</h2>
+      <p>
+        O sistema hexadecimal (base 16) usa os dígitos <strong>0–9</strong> e as letras <strong>A–F</strong>,
+        onde A=10, B=11, C=12, D=13, E=14, F=15.
+      </p>
+      <p>
+        Cada posição tem um <strong>peso</strong> que é uma potência de 16:
+      </p>
+      <table class="tabela-pesos">
+        <thead>
+          <tr>
+            <th>Posição</th>
+            <th>Peso</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1º (direita)</td><td>16⁰</td><td>1</td></tr>
+          <tr><td>2º</td><td>16¹</td><td>16</td></tr>
+          <tr><td>3º</td><td>16²</td><td>256</td></tr>
+          <tr><td>4º</td><td>16³</td><td>4096</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Para converter, multiplique cada dígito pelo seu peso e some os resultados.<br />
+        Ex: <strong>1A</strong>₁₆ = 1×16 + 10×1 = <strong>26</strong>
+      </p>
+      <p>
+        No campo <em>resultado</em> você pode digitar expressões como <code>10*16</code>.
+      </p>
+      <button onclick="fecharTutorial()">Fechar</button>
+    </div>
+  </div>
+
+  <script src="hex.js"></script>
+</body>
+</html>
